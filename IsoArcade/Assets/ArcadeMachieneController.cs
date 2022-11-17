@@ -9,6 +9,7 @@ public class ArcadeMachieneController : Clickable
     public GameObject location;
     public GameObject RemoveTimeText;
 
+    private Mouse mouseManager;
     private float countDown;
     private float fullTime = 80;
     private float minusTimerClick = 5;
@@ -16,20 +17,31 @@ public class ArcadeMachieneController : Clickable
     // Start is called before the first frame update
     void Start()
     {
-        inheritedFunction = minusCount;
+        mouseManager = GameObject.Find("MouseManager").GetComponent<Mouse>();
+        
         countDown = fullTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        countDown -= Time.deltaTime;
-        if(countDown < 0)
+        if (mouseManager.CheckEditor() == false)
         {
-            countDown = 0;
-            inheritedFunction = SpawnCoin;
+            inheritedFunction = minusCount;
+            countDown -= Time.deltaTime;
+            if (countDown < 0)
+            {
+                countDown = 0;
+                inheritedFunction = SpawnCoin;
+            }
+            displayTime(countDown, timerText);
         }
-        displayTime(countDown, timerText);
+        else
+        {
+            inheritedFunction = null;
+            timerText.text = "";
+        }
+       
     }
 
     void displayTime(float TimeToDisplay, TMP_Text time)
