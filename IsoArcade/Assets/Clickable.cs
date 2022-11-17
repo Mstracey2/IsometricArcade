@@ -10,21 +10,17 @@ public class Clickable : MonoBehaviour
     protected delegate void MyDelegate();
     protected MyDelegate inheritedFunction;
 
-    // Update is called once per frame
-    void Update()
+    private void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            cam = Camera.main;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        cam = Camera.main;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100))
+        if (Physics.Raycast(ray, out hit, 100))
+        {
+            if (hit.collider.gameObject == this.gameObject && inheritedFunction != null)
             {
-                if(hit.collider.gameObject == this.gameObject && inheritedFunction != null)
-                {
-                    inheritedFunction();
-                }  
+                inheritedFunction();
             }
         }
     }
