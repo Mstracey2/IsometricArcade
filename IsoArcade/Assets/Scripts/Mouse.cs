@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Mouse : MonoBehaviour
 {
-    protected Camera cam;
-    protected RaycastHit hit;
-    public Ray ray;
-    public GameObject grabPosition;
-    public LayerMask ignoreRaycast;
-    public LayerMask defaultLayer;
-    public GameObject grabbedObject = null;
+    protected Camera cam;                       // reference to the main camera
+    protected RaycastHit hit;                   // result of raycast
+    [SerializeField]
+    private Ray ray;                            // ray for raycast
+
+    [SerializeField]
+    private GameObject grabPosition;            // location of the grabber, uses the transform as a location when moving objects
+    [SerializeField]
+    private LayerMask ignoreRaycast;
+    [SerializeField]
+    private LayerMask defaultLayer;
+    [SerializeField]
+    private GameObject grabbedObject = null;
 
     private bool editorMode;
     // Start is called before the first frame update

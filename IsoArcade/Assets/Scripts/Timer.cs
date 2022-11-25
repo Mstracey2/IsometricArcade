@@ -7,8 +7,8 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public TMP_Text TimeText;
-    public string timeString;
+    [SerializeField]
+    private TMP_Text TimeText;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +18,6 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DateTime now = DateTime.Now;
         TimeText.text = DateTime.Now.ToString("hh:mm:ss");
     }
 }

@@ -10,15 +10,15 @@ public class Currency : MonoBehaviour
 
     private void Start()
     {
-        UIText = GetComponentInChildren<TMP_Text>();
+        UIText = GetComponentInChildren<TMP_Text>();                //gets the UI currency text
     }
-    public void AddToCurrency()
+    public void AddToCurrency()                                     //Adds value to currency
     {
         currency++;
         UpdateUI();
     }
 
-    public void UpdateUI()
+    public void UpdateUI()                                         // updates the text in the UI
     {
         UIText.text = "Currency: " + currency;
     }
