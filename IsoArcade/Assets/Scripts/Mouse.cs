@@ -57,20 +57,20 @@ public class Mouse : MonoBehaviour
             if(hit.collider != null)
             {
                 hit.collider.gameObject.TryGetComponent<Clickable>(out comp);
-            }
-            if (comp != null)
-            {
-               comp.RunFunction();
-               if (comp.gameObject.CompareTag("Object") && CheckEditor() == false)
-               {
-                    MinigameButtonScript.Instance.ShowButton();
-                    MinigameButtonScript.Instance.ChangeScene(comp.GetComponent<ArcadeMachieneController>().ShowMinigame());
-                    
-               }
-            }
-            else
-            {
-                
+                if (comp != null)
+                {
+                    comp.RunFunction();
+                    if (comp.gameObject.CompareTag("Object") && CheckEditor() == false)
+                    {
+                        MinigameButtonScript.Instance.ShowButton();
+                        MinigameButtonScript.Instance.ChangeScene(comp.GetComponent<ArcadeMachieneController>().ShowMinigame());
+
+                    }
+                }
+                else if(hit.collider.tag != "Button")
+                {
+                    MinigameButtonScript.Instance.HideButton();
+                }
             }
             comp = null;
         }

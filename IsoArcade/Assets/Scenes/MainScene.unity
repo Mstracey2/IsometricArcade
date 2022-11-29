@@ -971,7 +971,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 475076265}
         m_TargetAssemblyTypeName: MinigameButtonScript, Assembly-CSharp
-        m_MethodName: Pressed
+        m_MethodName: StartMinigame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1316,6 +1316,7 @@ GameObject:
   - component: {fileID: 744452255}
   - component: {fileID: 744452254}
   - component: {fileID: 744452258}
+  - component: {fileID: 744452259}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1420,6 +1421,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01625dc724120c46b56808e88115e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &744452259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744452253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b368eb590191e24abd0eef37e4c2f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allText:
+  - {fileID: 307972228}
+  - {fileID: 1866362890}
+  - {fileID: 2144796869}
 --- !u!1 &975679220
 GameObject:
   m_ObjectHideFlags: 0

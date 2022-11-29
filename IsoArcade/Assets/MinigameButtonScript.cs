@@ -26,11 +26,11 @@ public class MinigameButtonScript : MonoBehaviour
     private Button gameButton;
     private Image buttonImage;
     private TMP_Text buttonText;
-    private GameObject UI;
+    private HideUI UI;
 
     private void Start()
     {
-        UI = gameObject.transform.parent.gameObject;
+        UI = GetComponentInParent<HideUI>();
         main = Camera.main;
         gameButton = GetComponent<Button>();
         buttonImage = GetComponent<Image>();
@@ -44,7 +44,10 @@ public class MinigameButtonScript : MonoBehaviour
             minigameCam = scene.GetComponentInChildren<Camera>();
             main.enabled = false;
             minigameCam.enabled = true;
-            UI.SetActive(false);
+            UI.Hide();
+            buttonText.text = "Return";
+            gameButton.onClick.RemoveAllListeners();
+            gameButton.onClick.AddListener(ReturnToMain);
         }
     }
 
@@ -52,7 +55,11 @@ public class MinigameButtonScript : MonoBehaviour
     {
         main.enabled = true;
         minigameCam.enabled = false;
-        UI.SetActive(true);
+        UI.Show();
+        buttonText.text = "Restock";
+        gameButton.onClick.RemoveAllListeners();
+        gameButton.onClick.AddListener(StartMinigame);
+        HideButton();
     }
 
     public void ChangeScene(GameObject newMinigameScene)
