@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class Rotate : Clickable
 {
-    Mouse mManager;
-    MeshRenderer rend;
+    MeshRenderer rend;                      // renderer and collider is enabled and disabled when editor mode is switched
     Collider col;
-    GameObject parent;
-    float newAngle;
+    GameObject parent;                      // gets parent object
+    float newAngle;                         // angle used to rotate object
+
+    #region Get components
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         rend = GetComponent<MeshRenderer>();
         col = GetComponent<Collider>();
-        mManager = GameObject.Find("MouseManager").GetComponent<Mouse>();
-        parent = transform.parent.gameObject;
-        inheritedFunction = RotateParent;
+        parent = transform.parent.gameObject; 
+        inheritedFunction = RotateParent;                                           // inherited function from clickable is set to rotate
     }
+    #endregion
 
     // Update is called once per frame
     void Update()
     {
-        if (mManager.CheckEditor())
+        if (Mouse.Instance.CheckEditor())                                                 // if in editor mode, make the object visible and collidable
         {
             rend.enabled = true;
             col.enabled = true;
@@ -34,10 +35,10 @@ public class Rotate : Clickable
         }
     }
 
-    void RotateParent()
+   public void RotateParent()
     {
-        newAngle = parent.transform.localRotation.y + 90;
+        newAngle = parent.transform.localRotation.y + 90;                        //snaps the parent on a 90 degree rotation
 
-        parent.transform.Rotate(0, newAngle, 0, Space.Self);
+        parent.transform.Rotate(0, newAngle, 0, Space.Self);                     //rotates parent on the new angle
     }
 }

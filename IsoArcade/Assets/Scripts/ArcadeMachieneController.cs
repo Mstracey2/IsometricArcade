@@ -12,42 +12,24 @@ public class ArcadeMachieneController : Clickable
     private GameObject location;            // reference to the transform of where the coin is instanciated
     [SerializeField]
     private GameObject RemoveTimeText;      //reference to the time remover prefab
-
-    private Mouse mouseManager;             // reference to the mouse manager script, used to check whether the game is in editor mode
     private float countDown;                // counter
     private float fullTime = 80;            // length of time it takes for the machine to dispense
     private float minusTimerClick = 5;      // amount the player can click off the time
     [SerializeField]
     private TMP_Text timerText;             // reference of the timer
+    public GameObject MinigameScene;
     #endregion
+
     // Start is called before the first frame update
     void Start()
-    {
-        mouseManager = GameObject.Find("MouseManager").GetComponent<Mouse>();           // will find the mouse manager upon creation and get the Mouse script component
-        
+    {         
         countDown = fullTime;                                                           // makes the countdown equal to the starting count
     }
 
     // Update is called once per frame
     void Update()                                                           
     {
-        if (mouseManager.CheckEditor() == false)                                        //checks if the game isn't in editor mode
-        {
-            inheritedFunction = minusCount;                                             // if the player clicks, time is removed from the counter
-            countDown -= Time.deltaTime;                                                // starts the countdown
-            if (countDown < 0)                                                          // if the countdown is 0, the display will stay 0 and the inherited function will spawn a coin
-            {
-                countDown = 0;
-                inheritedFunction = SpawnCoin;
-            }
-            displayTime(countDown, timerText);                                          // displays the time correctly formatted on the timer
-        }
-        else
-        {
-            inheritedFunction = null;                                                   // defaults to this if the game is in editor mode
-            timerText.text = "";
-        }
-       
+        CountDown();
     }
 
     void displayTime(float TimeToDisplay, TMP_Text time)                                // function to display the time in minutes instead of a single int
@@ -91,5 +73,35 @@ public class ArcadeMachieneController : Clickable
         countDown = fullTime;                                                                                                       // resets the countdown
 
         inheritedFunction = minusCount;                                                                                             //click function returns to removing time from timer
+    }
+
+
+    public void CountDown()
+    {
+        if (Mouse.Instance.CheckEditor() == false)                                        //checks if the game isn't in editor mode
+        {
+            countDown -= Time.deltaTime;                                                // starts the countdown
+            if (countDown < 0)                                                          // if the countdown is 0, the display will stay 0 and the inherited function will spawn a coin
+            {
+                countDown = 0;
+                inheritedFunction = SpawnCoin;   
+            }
+            else
+            {
+                inheritedFunction = minusCount;
+            }
+
+            displayTime(countDown, timerText);                                          // displays the time correctly formatted on the timer
+        }
+        else
+        {
+            inheritedFunction = null;                                                   // defaults to this if the game is in editor mode
+            timerText.text = "";
+        }
+    }
+
+    public GameObject ShowMinigame()
+    {
+        return MinigameScene;
     }
 }

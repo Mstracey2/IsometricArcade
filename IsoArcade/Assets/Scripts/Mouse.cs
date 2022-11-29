@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class Mouse : MonoBehaviour
 {
+    public static Mouse Instance;
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    #region variables
     protected Camera cam;                       // reference to the main camera
     protected RaycastHit hit;                   // result of raycast
     [SerializeField]
@@ -12,89 +26,118 @@ public class Mouse : MonoBehaviour
     [SerializeField]
     private GameObject grabPosition;            // location of the grabber, uses the transform as a location when moving objects
     [SerializeField]
-    private LayerMask ignoreRaycast;
+    private LayerMask ignoreRaycast;            //Layer that ignores the raycast, this is required for moving the object around 
     [SerializeField]
-    private LayerMask defaultLayer;
+    private LayerMask defaultLayer;             // default layer, object switches back to this when the object is dropped so i can be picked back up again
     [SerializeField]
-    private GameObject grabbedObject = null;
+    private GameObject grabbedObject = null;    // reference to the object thats grabbed, stops the game automatically picking up other objects when one is already picked up
 
-    private bool editorMode;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool editorMode;                    // bool which checks to see whether the game is in editor mode
+    Clickable comp;
+    #endregion
 
-    public void Raycast()
+    private void Start()
     {
         cam = Camera.main;
-        ray = cam.ScreenPointToRay(Input.mousePosition);
+    }
 
-        if(Physics.Raycast(ray, out hit, 100))
-        {
-            CheckMousePos();
-        }
-        
-           
-
-           
-        
+    public void Raycast()                                   //raycast from mouse
+    {                           
+        ray = cam.ScreenPointToRay(Input.mousePosition);    //gets mouse position from the camera
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (editorMode)
+        if (Input.GetMouseButtonDown(0))
         {
             Raycast();
+            Physics.Raycast(ray, out hit, 100);
+            
+            if(hit.collider != null)
+            {
+                hit.collider.gameObject.TryGetComponent<Clickable>(out comp);
+            }
+            if (comp != null)
+            {
+               comp.RunFunction();
+               if (comp.gameObject.CompareTag("Object") && CheckEditor() == false)
+               {
+                    MinigameButtonScript.Instance.ShowButton();
+                    MinigameButtonScript.Instance.ChangeScene(comp.GetComponent<ArcadeMachieneController>().ShowMinigame());
+                    
+               }
+            }
+            else
+            {
+                
+            }
+            comp = null;
         }
-       
+
+        if(editorMode)
+        {
+            Raycast();
+            Physics.Raycast(ray, out hit, 100);
+            EditorMouse();                                //checks if what the player clicked on is movable and moves it
+        }
     }
 
-    float FindBoundary(Collider col)
+    #region Object movement
+
+    float FindBoundary(Collider col)                        // function used to find the boundary of the collider of the object.
     {
         float yHalf = col.bounds.extents.y;
         float yCenter= col.bounds.extents.y;
         float yLower = transform.position.y + (yCenter - yHalf);
-        return yLower;
+        return yLower;                                              // returns the lower boundary of the collider, used to move the object around at this position
     }
 
-    void CheckMousePos()
+    void EditorMouse()
     {
         if (Input.GetMouseButton(0))
         {
-            
-            if (hit.collider.gameObject.tag == "Object" && grabbedObject == null)
+            if (hit.collider != null)
             {
-                grabbedObject = hit.collider.gameObject;
-                grabbedObject.layer = ignoreRaycast;
+                CheckEditCollider();
             }
-            else if (hit.collider.gameObject.tag == "Floor" )
-            {
-                grabPosition.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-            }
-
             if (grabbedObject != null)
             {
-                grabbedObject.transform.position = new Vector3(grabPosition.transform.position.x, grabPosition.transform.position.y + FindBoundary(grabbedObject.GetComponent<Collider>()) - 0.12f, grabPosition.transform.position.z);
+                grabbedObject.transform.position = new Vector3(grabPosition.transform.position.x, grabPosition.transform.position.y + FindBoundary(grabbedObject.GetComponent<Collider>()) - 0.12f, grabPosition.transform.position.z); //grabbed object follows the position of the grabber object, but on the Y axis, its grabbed at the bottom of the object boundary
             }
-
         }
-        if (Input.GetMouseButtonUp(0) && grabbedObject != null)
+        else if (editorMode && Input.GetMouseButtonUp(0) && grabbedObject != null)           //if the player lets go of the mouse button
         {
-            grabbedObject.layer = defaultLayer;
-            grabbedObject = null;
+            grabbedObject.layer = defaultLayer;                               // returns layer to default 
+            grabbedObject = null;                                             // grabbed object variable turns back to null
         }
     }
 
-    public void ChangeToEditor()
+    public void CheckEditCollider()
     {
-        editorMode = !editorMode;
-        
+        if (hit.collider.gameObject.tag == "Object" && grabbedObject == null)    //if the collider is an object and the player isn't already holding something       
+        {
+            grabbedObject = hit.collider.gameObject;                            // grabbed object becomes the object
+            grabbedObject.layer = ignoreRaycast;                                // the grabbed objects layer becomes the ignore raycast layer
+        }
+        else if (hit.collider.gameObject.tag == "Floor")
+        {
+            grabPosition.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);       // grab position follows above the mouse if the mouse is pointing at the floor
+        }
     }
 
-    public bool CheckEditor()
+    #endregion
+
+
+    #region Editor statements
+    public void ChangeToEditor()            //changes the editor variable
+    {
+        editorMode = !editorMode;   
+    }
+
+    public bool CheckEditor()               //returns editor value
     {
         return editorMode;
     }
+    #endregion
 }
