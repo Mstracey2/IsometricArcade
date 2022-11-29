@@ -7,6 +7,7 @@ public class Rotate : Clickable
     MeshRenderer rend;                      // renderer and collider is enabled and disabled when editor mode is switched
     Collider col;
     GameObject parent;                      // gets parent object
+    public GameObject center;
     float newAngle;                         // angle used to rotate object
 
     #region Get components
@@ -37,7 +38,7 @@ public class Rotate : Clickable
 
    public void RotateParent()
     {
-        newAngle = parent.transform.localRotation.y + 90;                        //snaps the parent on a 90 degree rotation
+        newAngle = transform.localRotation.y + 90;                        //snaps the parent on a 90 degree rotation
 
         parent.transform.Rotate(0, newAngle, 0, Space.Self);                     //rotates parent on the new angle
     }

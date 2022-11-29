@@ -32,6 +32,8 @@ public class Mouse : MonoBehaviour
     [SerializeField]
     private GameObject grabbedObject = null;    // reference to the object thats grabbed, stops the game automatically picking up other objects when one is already picked up
 
+    public float bottomCol;
+
     private bool editorMode;                    // bool which checks to see whether the game is in editor mode
     Clickable comp;
     #endregion
@@ -67,10 +69,6 @@ public class Mouse : MonoBehaviour
 
                     }
                 }
-                else if(hit.collider.tag != "Button")
-                {
-                    MinigameButtonScript.Instance.HideButton();
-                }
             }
             comp = null;
         }
@@ -85,11 +83,11 @@ public class Mouse : MonoBehaviour
 
     #region Object movement
 
-    float FindBoundary(Collider col)                        // function used to find the boundary of the collider of the object.
+    float FindBoundary(Collider col,Transform obj)                        // function used to find the boundary of the collider of the object.
     {
         float yHalf = col.bounds.extents.y;
-        float yCenter= col.bounds.extents.y;
-        float yLower = transform.position.y + (yCenter - yHalf);
+        float yCenter= col.bounds.center.y;
+        float yLower = obj.transform.position.y + (yCenter - yHalf);
         return yLower;                                              // returns the lower boundary of the collider, used to move the object around at this position
     }
 
@@ -103,7 +101,8 @@ public class Mouse : MonoBehaviour
             }
             if (grabbedObject != null)
             {
-                grabbedObject.transform.position = new Vector3(grabPosition.transform.position.x, grabPosition.transform.position.y + FindBoundary(grabbedObject.GetComponent<Collider>()) - 0.12f, grabPosition.transform.position.z); //grabbed object follows the position of the grabber object, but on the Y axis, its grabbed at the bottom of the object boundary
+                grabbedObject.GetComponent<Rigidbody>().MovePosition(new Vector3(grabPosition.transform.localPosition.x, grabPosition.transform.localPosition.y, grabPosition.transform.localPosition.z));
+                //grabbedObject.transform.position = new Vector3(grabPosition.transform.localPosition.x, grabPosition.transform.localPosition.y + (grabbedObject.transform.position.y - bottomCol), grabPosition.transform.localPosition.z); //grabbed object follows the position of the grabber object, but on the Y axis, its grabbed at the bottom of the object boundary
             }
         }
         else if (editorMode && Input.GetMouseButtonUp(0) && grabbedObject != null)           //if the player lets go of the mouse button
@@ -119,6 +118,8 @@ public class Mouse : MonoBehaviour
         {
             grabbedObject = hit.collider.gameObject;                            // grabbed object becomes the object
             grabbedObject.layer = ignoreRaycast;                                // the grabbed objects layer becomes the ignore raycast layer
+
+            bottomCol = FindBoundary(grabbedObject.GetComponent<Collider>(), grabbedObject.transform);
         }
         else if (hit.collider.gameObject.tag == "Floor")
         {
