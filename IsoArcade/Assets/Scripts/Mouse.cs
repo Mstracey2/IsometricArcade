@@ -24,13 +24,13 @@ public class Mouse : MonoBehaviour
     private Ray ray;                            // ray for raycast
 
     [SerializeField]
-    private GameObject grabPosition;            // location of the grabber, uses the transform as a location when moving objects
+    private UnityEngine.GameObject grabPosition;            // location of the grabber, uses the transform as a location when moving objects
     [SerializeField]
     private LayerMask ignoreRaycast;            //Layer that ignores the raycast, this is required for moving the object around 
     [SerializeField]
     private LayerMask defaultLayer;             // default layer, object switches back to this when the object is dropped so i can be picked back up again
     [SerializeField]
-    private GameObject grabbedObject = null;    // reference to the object thats grabbed, stops the game automatically picking up other objects when one is already picked up
+    private UnityEngine.GameObject grabbedObject = null;    // reference to the object thats grabbed, stops the game automatically picking up other objects when one is already picked up
 
     public float bottomCol;
 

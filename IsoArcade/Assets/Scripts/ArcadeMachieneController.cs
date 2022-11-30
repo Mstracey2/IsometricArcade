@@ -17,7 +17,8 @@ public class ArcadeMachieneController : Clickable
     private float minusTimerClick = 5;      // amount the player can click off the time
     [SerializeField]
     private TMP_Text timerText;             // reference of the timer
-    public GameObject MinigameScene;
+    [SerializeField]
+    private GameObject MinigameScene;
     #endregion
 
     // Start is called before the first frame update
@@ -65,7 +66,7 @@ public class ArcadeMachieneController : Clickable
 
     public void SpawnCoin()                                     //function used to spawn coin
     {
-        GameObject newCoin = Instantiate(coin, location.transform.position, location.transform.rotation);                           //instantiates a coin in the spawner location
+       GameObject newCoin = Instantiate(coin, location.transform.position, location.transform.rotation);                           //instantiates a coin in the spawner location
 
         newCoin.GetComponent<Rigidbody>().AddForce(transform.up * 500);                                                             // applys force upwards
         newCoin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)) * 50);              // applys force in a random direction on the x and z axis

@@ -22,7 +22,7 @@ public class MinigameButtonScript : MonoBehaviour
     }
     private Camera main;
     private Camera minigameCam;
-    private GameObject scene;
+    private UnityEngine.GameObject scene;
     private Button gameButton;
     private Image buttonImage;
     private TMP_Text buttonText;
@@ -62,7 +62,7 @@ public class MinigameButtonScript : MonoBehaviour
         HideButton();
     }
 
-    public void ChangeScene(GameObject newMinigameScene)
+    public void ChangeScene(UnityEngine.GameObject newMinigameScene)
     {
         scene = newMinigameScene;
     }
