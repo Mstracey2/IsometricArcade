@@ -30,7 +30,8 @@ public class Mouse : MonoBehaviour
     [SerializeField]
     private LayerMask defaultLayer;             // default layer, object switches back to this when the object is dropped so i can be picked back up again
     [SerializeField]
-    private UnityEngine.GameObject grabbedObject = null;    // reference to the object thats grabbed, stops the game automatically picking up other objects when one is already picked up
+    private GameObject grabbedObject = null;    // reference to the object thats grabbed, stops the game automatically picking up other objects when one is already picked up
+    private Rigidbody grabbedObjectRigidBody;
 
     public float bottomCol;
 
@@ -101,7 +102,8 @@ public class Mouse : MonoBehaviour
             }
             if (grabbedObject != null)
             {
-                grabbedObject.GetComponent<Rigidbody>().MovePosition(new Vector3(grabPosition.transform.localPosition.x, grabPosition.transform.localPosition.y, grabPosition.transform.localPosition.z));
+                grabbedObjectRigidBody.isKinematic = true;
+                grabbedObjectRigidBody.MovePosition(new Vector3(grabPosition.transform.localPosition.x, grabbedObjectRigidBody.position.y, grabPosition.transform.localPosition.z));
                 //grabbedObject.transform.position = new Vector3(grabPosition.transform.localPosition.x, grabPosition.transform.localPosition.y + (grabbedObject.transform.position.y - bottomCol), grabPosition.transform.localPosition.z); //grabbed object follows the position of the grabber object, but on the Y axis, its grabbed at the bottom of the object boundary
             }
         }
@@ -109,6 +111,8 @@ public class Mouse : MonoBehaviour
         {
             grabbedObject.layer = defaultLayer;                               // returns layer to default 
             grabbedObject = null;                                             // grabbed object variable turns back to null
+            grabbedObjectRigidBody.isKinematic = false;
+            grabbedObjectRigidBody = null;
         }
     }
 
@@ -118,6 +122,7 @@ public class Mouse : MonoBehaviour
         {
             grabbedObject = hit.collider.gameObject;                            // grabbed object becomes the object
             grabbedObject.layer = ignoreRaycast;                                // the grabbed objects layer becomes the ignore raycast layer
+            grabbedObjectRigidBody = grabbedObject.GetComponent<Rigidbody>();
 
             bottomCol = FindBoundary(grabbedObject.GetComponent<Collider>(), grabbedObject.transform);
         }

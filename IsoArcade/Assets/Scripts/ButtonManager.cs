@@ -11,10 +11,14 @@ public class ButtonManager : MonoBehaviour
     private Item selectedInfo;
 
     private string itemName;
-    private Image itemImage;
+    private Sprite itemImage;
     private float potIncome;
     private float price;
     private float time;
+    public bool pauseTime = false;
+
+    [SerializeField]
+    private Button buttonEvent;
 
     [SerializeField]
     private TMP_Text textName;
@@ -27,6 +31,8 @@ public class ButtonManager : MonoBehaviour
     [SerializeField]
     private TMP_Text texttime;
 
+    public ShopManager shopRef; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,25 +44,31 @@ public class ButtonManager : MonoBehaviour
         time = Random.Range(20, 300);
 
         textName.text = itemName;
-        textImage = itemImage;
+        textImage.sprite = itemImage;
         textIncome.text = "Income: " + potIncome.ToString();
         textPrice.text = "Price: " + price.ToString();
         texttime.text = time.ToString();
+
+        buttonEvent = GetComponent<Button>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        time -= Time.deltaTime;
+        if(pauseTime == false)
+        {
+            time -= Time.deltaTime;
 
-        if(time <= 0)
-        {
-            Destroy(this.gameObject);
+            if (time <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                displayTime(time, texttime);
+            }
         }
-        else
-        {
-            displayTime(time, texttime);
-        }
+       
 
     }
 
@@ -71,5 +83,33 @@ public class ButtonManager : MonoBehaviour
     public float CheckTime()
     {
         return time;
+    }
+
+    public float CheckPrice()
+    {
+        return price;
+    }
+
+    public void setShop(ShopManager thisShop)
+    {
+        shopRef = thisShop;
+    }
+
+    public void MoveLocation()
+    {
+      shopRef.MoveToInventory(this.gameObject);  
+    }
+
+    public void NoLongerInShop()
+    {
+        textPrice.text = null;
+        texttime.text = null;
+        pauseTime = true;
+        buttonEvent.onClick.RemoveAllListeners();
+    }
+
+    public void AddListener()
+    {
+        buttonEvent.onClick.AddListener(MoveLocation);
     }
 }

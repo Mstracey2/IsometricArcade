@@ -488,12 +488,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoList:
-  - {fileID: 11400000, guid: 8b1676bf3bb98064da92d4068b596c2d, type: 2}
+  - {fileID: 11400000, guid: ff9fd3ca93984c94d97a47abdb326b4a, type: 2}
+  - {fileID: 11400000, guid: 19939cf1e49c18c4f9b5fb7fef71cd31, type: 2}
+  - {fileID: 11400000, guid: ddda22c905a69374c80ee24ce24cf3e4, type: 2}
+  pauseTime: 0
+  buttonEvent: {fileID: 0}
   textName: {fileID: 6200799943020311359}
   textImage: {fileID: 6200799942823363830}
   textIncome: {fileID: 6200799943369484223}
   textPrice: {fileID: 6200799942125501286}
   texttime: {fileID: 4247929616375769180}
+  shopRef: {fileID: 0}
 --- !u!1 &6200799943020311357
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,8 +592,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 17.02
+  m_fontSizeBase: 17.02
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

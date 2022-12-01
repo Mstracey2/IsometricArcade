@@ -23,4 +23,9 @@ public class Currency : MonoBehaviour
         UIText.text = "Currency: " + currency;
     }
 
+    public float ReturnCurrency()
+    {
+        return currency;
+    }
+
 }
