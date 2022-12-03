@@ -16,7 +16,7 @@ public class Coin : Clickable
 
     public void AddCurrency()
     {
-        UICurrency.AddToCurrency();             //function that adds to currencey on the UI
+        UICurrency.SetCurrency(UICurrency.ReturnCurrency() + 1);             //function that adds to currencey on the UI
         Destroy(gameObject);                    //destroys coin
     }
 

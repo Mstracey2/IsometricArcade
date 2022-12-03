@@ -13,9 +13,10 @@ public class ButtonManager : MonoBehaviour
     private string itemName;
     private Sprite itemImage;
     private float potIncome;
-    private float price;
+    public float price;
     private float time;
     public bool pauseTime = false;
+    private GameObject machine;
 
     [SerializeField]
     private Button buttonEvent;
@@ -50,6 +51,8 @@ public class ButtonManager : MonoBehaviour
         texttime.text = time.ToString();
 
         buttonEvent = GetComponent<Button>();
+
+        machine = selectedInfo.machine;
     }
 
     // Update is called once per frame
@@ -105,11 +108,36 @@ public class ButtonManager : MonoBehaviour
         textPrice.text = null;
         texttime.text = null;
         pauseTime = true;
-        buttonEvent.onClick.RemoveAllListeners();
+        RemoveListeners();
     }
 
-    public void AddListener()
+    public void AddMoveToInventoryListener()
     {
         buttonEvent.onClick.AddListener(MoveLocation);
+    }
+
+    public void AddSpawnInRoomListener(InventoryManager playerInv)
+    {
+        buttonEvent.onClick.AddListener(() => playerInv.SpawnObject(this));
+    }
+
+    public GameObject Getmachine()
+    {
+        return machine;
+    }
+
+    public string GetName()
+    {
+        return itemName;
+    }
+
+    public float GetIncome()
+    {
+        return potIncome;
+    }
+
+    public void RemoveListeners()
+    {
+        buttonEvent.onClick.RemoveAllListeners();
     }
 }

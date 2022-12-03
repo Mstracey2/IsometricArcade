@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - Object
   - Button
+  - SecondaryUI
   layers:
   - Default
   - TransparentFX

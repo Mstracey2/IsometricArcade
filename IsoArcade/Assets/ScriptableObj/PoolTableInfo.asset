@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7847146d987aca40b714d0af6cb5916, type: 3}
-  m_Name: ArcadeMachineInfo
+  m_Name: PoolTableInfo
   m_EditorClassIdentifier: 
-  itemName: Arcade Machine
-  imageSprite: {fileID: 21300000, guid: eca0cd6a5a6cb1446b62455255dd6287, type: 3}
+  itemName: Pool Table
+  imageSprite: {fileID: 21300000, guid: d5312946e4649394798f5bad9c788014, type: 3}
+  machine: {fileID: 4432566338293844810, guid: ac71e1e4178c81d42aa4fd5da1e2c434, type: 3}

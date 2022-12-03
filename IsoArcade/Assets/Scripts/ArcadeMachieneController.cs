@@ -13,18 +13,24 @@ public class ArcadeMachieneController : Clickable
     [SerializeField]
     private GameObject RemoveTimeText;      //reference to the time remover prefab
     private float countDown;                // counter
-    private float fullTime = 80;            // length of time it takes for the machine to dispense
+    private float fullTime = 0;            // length of time it takes for the machine to dispense
     private float minusTimerClick = 5;      // amount the player can click off the time
     [SerializeField]
     private TMP_Text timerText;             // reference of the timer
     [SerializeField]
     private GameObject MinigameScene;
+
+    private float machineIncome = 1;
+    private string arcadeName;
+
     #endregion
 
     // Start is called before the first frame update
     void Start()
-    {         
+    {
+        fullTime = 300 * machineIncome;
         countDown = fullTime;                                                           // makes the countdown equal to the starting count
+        
     }
 
     // Update is called once per frame
@@ -35,10 +41,13 @@ public class ArcadeMachieneController : Clickable
 
     void displayTime(float TimeToDisplay, TMP_Text time)                                // function to display the time in minutes instead of a single int
     {
-        float minutes = Mathf.FloorToInt(TimeToDisplay / 60);                           // divides the int by 60 to get minutes
-        float seconds = Mathf.FloorToInt(TimeToDisplay % 60);                           // gets the remainder of division of 60 to get the seconds
 
-        time.text = string.Format("{0:00}:{1:00}",minutes,seconds);                     //formats the string
+        
+        float seconds = (int)(TimeToDisplay % 60);                           // gets the remainder of division of 60 to get the seconds
+        float minutes = (int)(TimeToDisplay / 60) % 60;                           // divides the int by 60 to get minutes
+        float hours = (int)(TimeToDisplay / 3600) % 24;                                   // divides the mins by 60 to get hours
+
+        time.text = string.Format("{0:0}:{1:00}:{2:00}", hours,minutes,seconds);                     //formats the string
     }
 
     void minusCount()
@@ -66,10 +75,14 @@ public class ArcadeMachieneController : Clickable
 
     public void SpawnCoin()                                     //function used to spawn coin
     {
-       GameObject newCoin = Instantiate(coin, location.transform.position, location.transform.rotation);                           //instantiates a coin in the spawner location
+        for (int i = 0; i < machineIncome; i++)
+        {
+            GameObject newCoin = Instantiate(coin, location.transform.position, location.transform.rotation);                           //instantiates a coin in the spawner location
 
-        newCoin.GetComponent<Rigidbody>().AddForce(transform.up * 500);                                                             // applys force upwards
-        newCoin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)) * 50);              // applys force in a random direction on the x and z axis
+            newCoin.GetComponent<Rigidbody>().AddForce(transform.up * 500);                                                             // applys force upwards
+            newCoin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)) * 50);              // applys force in a random direction on the x and z axis
+        }
+        
 
         countDown = fullTime;                                                                                                       // resets the countdown
 
@@ -104,5 +117,12 @@ public class ArcadeMachieneController : Clickable
     public GameObject ShowMinigame()
     {
         return MinigameScene;
+    }
+
+
+    public void SetNameAndIncome(string name, float income)
+    {
+        arcadeName = name;
+        machineIncome = income;
     }
 }

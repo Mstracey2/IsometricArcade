@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: DDR
   imageSprite: {fileID: 21300000, guid: bd8c1299162508c458e090e100272446, type: 3}
+  machine: {fileID: 5087788868082844923, guid: 8a6e851775bc23c4690dfea0ee0a1f49, type: 3}

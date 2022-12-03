@@ -5,16 +5,12 @@ using UnityEngine;
 
 public class Currency : MonoBehaviour
 {
-    private float currency = 0;
+    private float currency = 200;
     private TMP_Text UIText;
 
     private void Start()
     {
         UIText = GetComponentInChildren<TMP_Text>();                //gets the UI currency text
-    }
-    public void AddToCurrency()                                     //Adds value to currency
-    {
-        currency++;
         UpdateUI();
     }
 
@@ -26,6 +22,12 @@ public class Currency : MonoBehaviour
     public float ReturnCurrency()
     {
         return currency;
+    }
+
+    public void SetCurrency(float newAmount)
+    {
+        currency = newAmount;
+        UpdateUI();
     }
 
 }

@@ -9,6 +9,8 @@ public class MinigameButtonScript : MonoBehaviour
 {
     public static MinigameButtonScript Instance;
 
+    [SerializeField] private TMP_Text textDeal;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -21,8 +23,9 @@ public class MinigameButtonScript : MonoBehaviour
         }
     }
     private Camera main;
-    private Camera minigameCam;
-    private UnityEngine.GameObject scene;
+    private Vector3 originalCamposition;
+    private Quaternion originalCamrotation;
+    private GameObject scene;
     private Button gameButton;
     private Image buttonImage;
     private TMP_Text buttonText;
@@ -35,15 +38,18 @@ public class MinigameButtonScript : MonoBehaviour
         gameButton = GetComponent<Button>();
         buttonImage = GetComponent<Image>();
         buttonText = GetComponentInChildren<TMP_Text>();
+        gameButton.onClick.AddListener(StartMinigame);
     }
 
     public void StartMinigame()
     {
         if(scene != null)
         {
-            minigameCam = scene.GetComponentInChildren<Camera>();
-            main.enabled = false;
-            minigameCam.enabled = true;
+            originalCamposition = main.transform.position;
+            originalCamrotation = main.transform.rotation;
+
+            main.transform.position = scene.transform.position;
+            main.transform.rotation = scene.transform.rotation;
             UI.Hide();
             buttonText.text = "Return";
             gameButton.onClick.RemoveAllListeners();
@@ -53,8 +59,8 @@ public class MinigameButtonScript : MonoBehaviour
 
     public void ReturnToMain()
     {
-        main.enabled = true;
-        minigameCam.enabled = false;
+        main.transform.position = originalCamposition;
+        main.transform.rotation = originalCamrotation;
         UI.Show();
         buttonText.text = "Restock";
         gameButton.onClick.RemoveAllListeners();
@@ -62,7 +68,7 @@ public class MinigameButtonScript : MonoBehaviour
         HideButton();
     }
 
-    public void ChangeScene(UnityEngine.GameObject newMinigameScene)
+    public void ChangeScene(GameObject newMinigameScene)
     {
         scene = newMinigameScene;
     }
@@ -72,6 +78,7 @@ public class MinigameButtonScript : MonoBehaviour
         gameButton.enabled = true;
         buttonImage.enabled = true;
         buttonText.enabled = true;
+        textDeal.enabled = true;
     }
 
     public void HideButton()
@@ -79,6 +86,7 @@ public class MinigameButtonScript : MonoBehaviour
         gameButton.enabled = false;
         buttonImage.enabled = false;
         buttonText.enabled = false;
+        textDeal.enabled = false;
     }
 
 }

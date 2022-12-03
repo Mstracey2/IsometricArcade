@@ -9,7 +9,7 @@ public class HideUI : MonoBehaviour
 
     public void Hide()
     {
-        foreach(UnityEngine.GameObject thisText in allText)
+        foreach(GameObject thisText in allText)
         {
             thisText.SetActive(false);
         }
@@ -17,9 +17,12 @@ public class HideUI : MonoBehaviour
 
     public void Show()
     {
-        foreach (UnityEngine.GameObject thisText in allText)
+        foreach (GameObject thisText in allText)
         {
-            thisText.SetActive(true);
+            if (!thisText.CompareTag("SecondaryUI"))
+            {
+              thisText.SetActive(true);
+            }
         }
     }
 }

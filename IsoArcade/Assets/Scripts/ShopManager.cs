@@ -10,6 +10,7 @@ public class ShopManager : PanelUI
     [SerializeField]
     private InventoryManager playerInventory;
 
+    public ButtonManager itemButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +60,7 @@ public class ShopManager : PanelUI
 
         itemList.Add(newManager);
         newManager.setShop(this);
-        newManager.AddListener();
+        newManager.AddMoveToInventoryListener();
 
         yield break;
     }
@@ -68,12 +69,16 @@ public class ShopManager : PanelUI
 
     public void MoveToInventory(GameObject chosenItem)
     {
-        //if (playerInventory.GetCurrency() >= chosenItem.CheckPrice())
-        //{
-            chosenItem.GetComponent<ButtonManager>().NoLongerInShop();
+        itemButton = chosenItem.GetComponent<ButtonManager>();
+
+        if (playerInventory.GetCurrency() >= itemButton.CheckPrice())
+        {
+            playerInventory.ChangeCurrency(playerInventory.GetCurrency() - itemButton.CheckPrice());
+            itemButton.NoLongerInShop();
+            itemButton.AddSpawnInRoomListener(playerInventory);
             playerInventory.AddItemToList(chosenItem);
             itemList.Remove(chosenItem.GetComponent<ButtonManager>());
-        //}
+        }
     }
   
 }
