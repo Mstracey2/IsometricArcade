@@ -24,7 +24,7 @@ public class Rotate : Clickable
     // Update is called once per frame
     void Update()
     {
-        if (Mouse.Instance.CheckEditor())                                                 // if in editor mode, make the object visible and collidable
+        if (Mouse.Instance.mouseMode == Mouse.Instance.MouseEditorMode)                                                 // if in editor mode, make the object visible and collidable
         {
             rend.enabled = true;
             col.enabled = true;

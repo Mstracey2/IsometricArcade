@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ArcadeMachieneController : Clickable
 {
-    #region 
+    #region Variables
     [SerializeField]
     private GameObject coin;                //reference to the coin prefab that the script dispenses
     [SerializeField]
@@ -34,15 +34,13 @@ public class ArcadeMachieneController : Clickable
     }
 
     // Update is called once per frame
-    void Update()                                                           
+    void Update()                      
     {
         CountDown();
     }
 
     void displayTime(float TimeToDisplay, TMP_Text time)                                // function to display the time in minutes instead of a single int
     {
-
-        
         float seconds = (int)(TimeToDisplay % 60);                           // gets the remainder of division of 60 to get the seconds
         float minutes = (int)(TimeToDisplay / 60) % 60;                           // divides the int by 60 to get minutes
         float hours = (int)(TimeToDisplay / 3600) % 24;                                   // divides the mins by 60 to get hours
@@ -50,9 +48,9 @@ public class ArcadeMachieneController : Clickable
         time.text = string.Format("{0:0}:{1:00}:{2:00}", hours,minutes,seconds);                     //formats the string
     }
 
-    void minusCount()
+    void MinusCount()
     {
-        countDown -= minusTimerClick;                                                   //removes the time from the countdown
+        countDown -= minusTimerClick;                                                                                                   //removes the time from the countdown
         GameObject text = Instantiate(RemoveTimeText, timerText.gameObject.transform.position, timerText.transform.rotation);           //instantiates removal time in the position of the time text
         TMP_Text removeTimeText = text.GetComponent<TMP_Text>();                                                                        // gets the text component from the new remove text
         displayTime(minusTimerClick, removeTimeText);                                                                                   // displays the removed time in minutes format
@@ -86,13 +84,13 @@ public class ArcadeMachieneController : Clickable
 
         countDown = fullTime;                                                                                                       // resets the countdown
 
-        inheritedFunction = minusCount;                                                                                             //click function returns to removing time from timer
+        inheritedFunction = MinusCount;                                                                                             //click function returns to removing time from timer
     }
 
 
     public void CountDown()
     {
-        if (Mouse.Instance.CheckEditor() == false)                                        //checks if the game isn't in editor mode
+        if (Mouse.Instance.mouseMode != Mouse.Instance.MouseEditorMode)                                        //checks if the game isn't in editor mode
         {
             countDown -= Time.deltaTime;                                                // starts the countdown
             if (countDown < 0)                                                          // if the countdown is 0, the display will stay 0 and the inherited function will spawn a coin
@@ -102,7 +100,7 @@ public class ArcadeMachieneController : Clickable
             }
             else
             {
-                inheritedFunction = minusCount;
+                inheritedFunction = MinusCount;
             }
 
             displayTime(countDown, timerText);                                          // displays the time correctly formatted on the timer
@@ -124,5 +122,10 @@ public class ArcadeMachieneController : Clickable
     {
         arcadeName = name;
         machineIncome = income;
+    }
+
+    public void TwoXIncome()
+    {
+        machineIncome = machineIncome * 2;
     }
 }

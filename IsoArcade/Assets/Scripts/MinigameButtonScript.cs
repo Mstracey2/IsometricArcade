@@ -45,11 +45,15 @@ public class MinigameButtonScript : MonoBehaviour
     {
         if(scene != null)
         {
+            MinigameManager thisManager = scene.GetComponent<MinigameManager>();
+            thisManager.GetMachine(scene);
             originalCamposition = main.transform.position;
             originalCamrotation = main.transform.rotation;
 
-            main.transform.position = scene.transform.position;
-            main.transform.rotation = scene.transform.rotation;
+            GameObject camPos = thisManager.ShowCam();
+            main.transform.position = camPos.transform.position;
+            main.transform.rotation = camPos.transform.rotation;
+            thisManager.ShowManager().RunFunction();
             UI.Hide();
             buttonText.text = "Return";
             gameButton.onClick.RemoveAllListeners();
