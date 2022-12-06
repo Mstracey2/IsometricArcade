@@ -6,25 +6,26 @@ using UnityEngine.Events;
 
 public class AmountCheck : MonoBehaviour
 {
-    [SerializeField] private Currency playersCurrency;
-    [SerializeField] private GameObject fundsText; 
+    #region Variables
+    [SerializeField] private Currency playersCurrency;               //what currency we are checking
+    [SerializeField] private GameObject fundsText;                   //the text in game;
 
-    private TMP_Text amountText;
+    private TMP_Text amountText;                                    //ref to the gameobject text;
 
-    private float currentCost;
-    private GameObject currentRoomButton;
-    private GameObject currentArrowButton;
-    private GameObject newRoomText;
+    private float currentCost;                                      //current cost of the room
+    private GameObject currentRoomButton;                           //button that the player pressed
+    private GameObject currentArrowButton;                          //button the pressed button swaps to
+    private GameObject newRoomText;                                 //UI pop up;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         amountText = GetComponent<TMP_Text>();
         transform.parent.gameObject.SetActive(false);
-        
     }
 
-    public void DisplayCostAndGetButton(float cost, GameObject button, GameObject arrowButton, GameObject UIRoom)
+    public void DisplayCostAndGetButton(float cost, GameObject button, GameObject arrowButton, GameObject UIRoom)               //passes through all the required values and displays them onto the UI correctly
     {
         amountText.text = "£" + cost;
         currentCost = cost;
@@ -33,13 +34,13 @@ public class AmountCheck : MonoBehaviour
         newRoomText = UIRoom;
     }
 
-   public void CheckPlayerCurrency()
+   public void CheckPlayerCurrency()                                                                                            //runs from the yes button
     {
         if(playersCurrency.ReturnCurrency() >= currentCost)
         {
-            playersCurrency.SetCurrency(playersCurrency.ReturnCurrency() - currentCost);
+            playersCurrency.SetCurrency(playersCurrency.ReturnCurrency() - currentCost);                                        // takes away the amount that the room costs
             currentCost = 0;
-            currentRoomButton.SetActive(false);
+            currentRoomButton.SetActive(false);                                                                                 //switches the buttons from paying button to move room button
             currentRoomButton = null;
             currentArrowButton.SetActive(true);
             currentArrowButton = null;

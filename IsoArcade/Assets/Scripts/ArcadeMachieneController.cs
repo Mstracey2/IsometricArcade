@@ -21,6 +21,7 @@ public class ArcadeMachieneController : Clickable
     private GameObject MinigameScene;
 
     private float machineIncome = 1;
+    private float fixedIncome;
     private string arcadeName;
 
     #endregion
@@ -76,11 +77,10 @@ public class ArcadeMachieneController : Clickable
         for (int i = 0; i < machineIncome; i++)
         {
             GameObject newCoin = Instantiate(coin, location.transform.position, location.transform.rotation);                           //instantiates a coin in the spawner location
-
             newCoin.GetComponent<Rigidbody>().AddForce(transform.up * 500);                                                             // applys force upwards
             newCoin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)) * 50);              // applys force in a random direction on the x and z axis
         }
-        
+        machineIncome = fixedIncome;
 
         countDown = fullTime;                                                                                                       // resets the countdown
 
@@ -118,13 +118,14 @@ public class ArcadeMachieneController : Clickable
     }
 
 
-    public void SetNameAndIncome(string name, float income)
+    public void SetNameAndIncome(string name, float income)                         //gets how much the machine can produce
     {
         arcadeName = name;
-        machineIncome = income;
+        fixedIncome = income;
+        machineIncome = fixedIncome;
     }
 
-    public void TwoXIncome()
+    public void TwoXIncome()                                                       // two X the income if the player wins the minigame condition
     {
         machineIncome = machineIncome * 2;
     }

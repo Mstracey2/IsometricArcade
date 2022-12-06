@@ -63,11 +63,12 @@ public class Mouse : MonoBehaviour
 
     public void MouseMainMode()
     {
-            Clickable();
-                    if (comp != null && comp.gameObject.CompareTag("Object") && Mouse.Instance.mouseMode != Mouse.Instance.MouseEditorMode)
+            Clickable();                        //function that checks if what the player clicked on is interactable
+
+                    if (comp != null && comp.gameObject.CompareTag("Object") && Mouse.Instance.mouseMode != Mouse.Instance.MouseEditorMode)             // will only run if the object was a interactable object and the game is not in editor mode
                     {
-                        MinigameButtonScript.Instance.ShowButton();
-                        MinigameButtonScript.Instance.ChangeScene(comp.GetComponent<ArcadeMachieneController>().ShowMinigame());
+                        MinigameButtonScript.Instance.ShowButton();                                         //if so, it will reveal the minigame button which will play the minigame attached to the machine
+                        MinigameButtonScript.Instance.ChangeScene(comp.gameObject);
 
                     }
             comp = null;
@@ -75,16 +76,16 @@ public class Mouse : MonoBehaviour
 
     public void MouseEditorMode()
     {
-        Clickable();
+        Clickable();                        //checks if the object clicked is a clickable interactable
         comp = null;
 
         if (Input.GetMouseButton(0))
         {
             if (hit.collider != null)
             {
-                CheckEditCollider();
+                CheckEditCollider();        //function to check what kind of interaction in the editor, it will either move the grabber across the floor or assign a object
             }
-            if (grabbedObject != null)
+            if (grabbedObject != null)      //if the interaction was a object, then the player can move the grabbed object across the floor
             {
                 grabbedObjectRigidBody.isKinematic = true;
                 grabbedObjectRigidBody.MovePosition(new Vector3(grabPosition.transform.localPosition.x, grabbedObjectRigidBody.position.y, grabPosition.transform.localPosition.z));
@@ -108,7 +109,7 @@ public class Mouse : MonoBehaviour
              hit.collider.gameObject.TryGetComponent<Clickable>(out comp);
                 if (comp != null)
                 {
-                comp.RunFunction();
+                    comp.RunFunction();                                     //if whatever was clicked had a clickable script, it will run the inherited function attached
                 }
             }
          }
@@ -118,17 +119,17 @@ public class Mouse : MonoBehaviour
     {
         if (hit.collider != null)
         {
-            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("PoolBall") && grabbedObject == null)
+            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("PoolBall") && grabbedObject == null)            //used to move the pool balls around the table using the grabbed object variable
             {
                 grabbedObject = hit.collider.gameObject;
             }
             if (Input.GetMouseButton(0) && grabbedObject != null)
             {
-                grabbedObject.transform.position = Vector3.MoveTowards(new Vector3(grabbedObject.transform.position.x, grabbedObject.transform.position.y, grabbedObject.transform.position.z), new Vector3(hit.point.x, grabbedObject.transform.position.y, hit.point.z), 1 * Time.deltaTime);
+                grabbedObject.transform.position = Vector3.MoveTowards(new Vector3(grabbedObject.transform.position.x, grabbedObject.transform.position.y, grabbedObject.transform.position.z), new Vector3(hit.point.x, grabbedObject.transform.position.y, hit.point.z), 5 * Time.deltaTime);
             }
 
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))                          //grabbed object is null if the player lets go
         {
             grabbedObject = null;
         }

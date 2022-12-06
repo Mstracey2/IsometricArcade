@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class DestroyBall : MonoBehaviour
 {
-    [SerializeField] TableMinigameManager manager;
-
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PoolBall"))
+        if (other.CompareTag("PoolBall"))                   //sets the state of the ball to false if trigger is activated
         {
-            manager.RemoveFromList(other.gameObject);
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 }

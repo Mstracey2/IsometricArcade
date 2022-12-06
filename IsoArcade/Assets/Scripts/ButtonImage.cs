@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class ButtonImage : MonoBehaviour
 {
+    #region Variables
     private Button button;
     private Image buttonImage;
     [SerializeField] private TMP_Text buttonText;
+    #endregion
 
     private void Start()
     {
@@ -17,6 +19,7 @@ public class ButtonImage : MonoBehaviour
     }
 
 
+    #region ButtonState                                 
     public void HideButton()
     {
         button.enabled = false;
@@ -30,4 +33,5 @@ public class ButtonImage : MonoBehaviour
         buttonImage.enabled = true;
         buttonText.enabled = true;
     }
+    #endregion                                  // sets the visiblity of the button
 }

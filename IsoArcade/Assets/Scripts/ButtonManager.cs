@@ -6,21 +6,21 @@ using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
+    #region Variables
     [SerializeField]
-    private Item[] infoList;
-    private Item selectedInfo;
+    private Item[] infoList;                            //gets list of possible machines
+    private Item selectedInfo;                          //selected machine
 
-    private string itemName;
+    private string itemName;                            
     private Sprite itemImage;
     private float potIncome;
     public float price;
     private float time;
-    public bool pauseTime = false;
-    private GameObject machine;
+    public bool pauseTime = false;                      //timer pause
+    private GameObject machine;                         //ref to the actual machine object
 
     [SerializeField]
-    private Button buttonEvent;
-
+    private Button buttonEvent;                         //ref to all the button text
     [SerializeField]
     private TMP_Text textName;
     [SerializeField]
@@ -32,19 +32,20 @@ public class ButtonManager : MonoBehaviour
     [SerializeField]
     private TMP_Text texttime;
 
-    public ShopManager shopRef; 
+    public ShopManager shopRef;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        selectedInfo = infoList[Random.Range(0, infoList.Length)];
+        selectedInfo = infoList[Random.Range(0, infoList.Length)];          //randomly selects info from the list
         itemName = selectedInfo.itemName;
         itemImage = selectedInfo.imageSprite;
-        potIncome = Random.Range(1, 20);
+        potIncome = Random.Range(1, 20);                                    // the Income, price and time are randomized. The price value becomes more expensive due to the income
         price = Mathf.Round(Random.Range(potIncome * 2, potIncome * 3) * 10);
         time = Random.Range(20, 300);
 
-        textName.text = itemName;
+        textName.text = itemName;                                           //sets all the text correctly
         textImage.sprite = itemImage;
         textIncome.text = "Income: " + potIncome.ToString();
         textPrice.text = "Price: " + price.ToString();
@@ -64,11 +65,11 @@ public class ButtonManager : MonoBehaviour
 
             if (time <= 0)
             {
-                Destroy(this.gameObject);
+                Destroy(this.gameObject);               //if the timer reaches 0, the item disappears from the shop
             }
             else
             {
-                displayTime(time, texttime);
+                displayTime(time, texttime);            // if the timer is still going, then it carrys on displaying the time
             }
         }
        
@@ -80,9 +81,10 @@ public class ButtonManager : MonoBehaviour
         float minutes = Mathf.FloorToInt(TimeToDisplay / 60);                           // divides the int by 60 to get minutes
         float seconds = Mathf.FloorToInt(TimeToDisplay % 60);                           // gets the remainder of division of 60 to get the seconds
 
-        time.text = string.Format("{0:00}:{1:00}", minutes, seconds);                     //formats the string
+        time.text = string.Format("{0:00}:{1:00}", minutes, seconds);                   
     }
 
+    #region Checkers
     public float CheckTime()
     {
         return time;
@@ -92,35 +94,6 @@ public class ButtonManager : MonoBehaviour
     {
         return price;
     }
-
-    public void setShop(ShopManager thisShop)
-    {
-        shopRef = thisShop;
-    }
-
-    public void MoveLocation()
-    {
-      shopRef.MoveToInventory(this.gameObject);  
-    }
-
-    public void NoLongerInShop()
-    {
-        textPrice.text = null;
-        texttime.text = null;
-        pauseTime = true;
-        RemoveListeners();
-    }
-
-    public void AddMoveToInventoryListener()
-    {
-        buttonEvent.onClick.AddListener(MoveLocation);
-    }
-
-    public void AddSpawnInRoomListener(InventoryManager playerInv)
-    {
-        buttonEvent.onClick.AddListener(() => playerInv.SpawnObject(this));
-    }
-
     public GameObject Getmachine()
     {
         return machine;
@@ -135,9 +108,40 @@ public class ButtonManager : MonoBehaviour
     {
         return potIncome;
     }
+    #endregion
 
+    public void setShop(ShopManager thisShop)                                            //gets the reference to the shop
+    {
+        shopRef = thisShop;
+    }
+
+    public void MoveLocation()                                                           //process of moving item from shop to inventory
+    {
+        shopRef.MoveToInventory(this.gameObject);  
+    }
+
+    public void NoLongerInShop()                                                         // anything on the button thats no longer relevent due to not being in the sho is set to null and the timer is paused
+    {
+        textPrice.text = null;
+        texttime.text = null;
+        pauseTime = true;
+        RemoveListeners();                                                              
+    }
+
+
+    #region Change Listeners
+    public void AddMoveToInventoryListener()
+    {
+        buttonEvent.onClick.AddListener(MoveLocation);
+    }
+
+    public void AddSpawnInRoomListener(InventoryManager playerInv)                          //when the button is clicked, object will spawn in room
+    {
+        buttonEvent.onClick.AddListener(() => playerInv.SpawnObject(this));
+    }
     public void RemoveListeners()
     {
         buttonEvent.onClick.RemoveAllListeners();
     }
+    #endregion
 }
