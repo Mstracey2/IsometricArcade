@@ -11977,6 +11977,7 @@ MonoBehaviour:
   itemList: []
   playerCurrency: {fileID: 744452258}
   spawner: {fileID: 1102709855}
+  minigame: {fileID: 1702296416}
 --- !u!114 &1906293426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14461,6 +14462,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pool Table export
       objectReference: {fileID: 0}
+    - target: {fileID: 4432566338293844813, guid: ac71e1e4178c81d42aa4fd5da1e2c434,
+        type: 3}
+      propertyPath: MinigameScene
+      value: 
+      objectReference: {fileID: 1702296416}
     - target: {fileID: 4432566338293844814, guid: ac71e1e4178c81d42aa4fd5da1e2c434,
         type: 3}
       propertyPath: m_RootOrder
@@ -14530,6 +14536,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ddr machine
       objectReference: {fileID: 0}
+    - target: {fileID: 5357626409463673123, guid: 8a6e851775bc23c4690dfea0ee0a1f49,
+        type: 3}
+      propertyPath: MinigameScene
+      value: 
+      objectReference: {fileID: 1702296416}
     - target: {fileID: 5607163679011479105, guid: 8a6e851775bc23c4690dfea0ee0a1f49,
         type: 3}
       propertyPath: m_RootOrder

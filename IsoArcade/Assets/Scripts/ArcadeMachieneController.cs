@@ -30,8 +30,7 @@ public class ArcadeMachieneController : Clickable
     void Start()
     {
         fullTime = 300 * machineIncome;
-        countDown = fullTime;                                                           // makes the countdown equal to the starting count
-        
+        countDown = fullTime;                                                           // makes the countdown equal to the starting count 
     }
 
     // Update is called once per frame
@@ -117,6 +116,10 @@ public class ArcadeMachieneController : Clickable
         return MinigameScene;
     }
 
+    public void SetMinigame(GameObject minigame)
+    {
+        MinigameScene = minigame;
+    }
 
     public void SetNameAndIncome(string name, float income)                         //gets how much the machine can produce
     {
