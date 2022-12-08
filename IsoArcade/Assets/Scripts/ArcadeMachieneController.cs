@@ -29,6 +29,7 @@ public class ArcadeMachieneController : Clickable
     // Start is called before the first frame update
     void Start()
     {
+        fixedIncome = machineIncome;
         fullTime = 300 * machineIncome;
         countDown = fullTime;                                                           // makes the countdown equal to the starting count 
     }

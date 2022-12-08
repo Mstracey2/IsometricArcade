@@ -15,7 +15,7 @@ public class ChangeRoom : Clickable
         inheritedFunction = ChangeToRoom;
     }
 
-    public void ChangeToRoom()                                                  //swiches room the player is looking at
+    public void ChangeToRoom()                                                  //swiches room the player is choosing to go to
     {
         Camera.main.transform.position = changeCamPos.transform.position;
         playerInv.ChangeSpawner(newSpawner);

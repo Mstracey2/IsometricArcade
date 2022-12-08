@@ -94,6 +94,7 @@ public class ButtonManager : MonoBehaviour
     {
         return price;
     }
+
     public GameObject Getmachine()
     {
         return machine;

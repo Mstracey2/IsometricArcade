@@ -63,15 +63,15 @@ public class Mouse : MonoBehaviour
 
     public void MouseMainMode()
     {
-            Clickable();                        //function that checks if what the player clicked on is interactable
+       Clickable();                        //function that checks if what the player clicked on is interactable
 
-                    if (comp != null && comp.gameObject.CompareTag("Object") && Mouse.Instance.mouseMode != Mouse.Instance.MouseEditorMode)             // will only run if the object was a interactable object and the game is not in editor mode
-                    {
-                        MinigameButtonScript.Instance.ShowButton();                                         //if so, it will reveal the minigame button which will play the minigame attached to the machine
-                        MinigameButtonScript.Instance.ChangeScene(comp.gameObject);
+       if (comp != null && comp.gameObject.CompareTag("Object") && Mouse.Instance.mouseMode != Mouse.Instance.MouseEditorMode)             // will only run if the object was a interactable object and the game is not in editor mode
+       {
+          MinigameButtonScript.Instance.ShowButton();                                         //if so, it will reveal the minigame button which will play the minigame attached to the machine
+          MinigameButtonScript.Instance.ChangeScene(comp.gameObject);
 
-                    }
-            comp = null;
+       }
+       comp = null;
     }
 
     public void MouseEditorMode()
