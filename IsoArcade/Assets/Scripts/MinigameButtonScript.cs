@@ -26,6 +26,7 @@ public class MinigameButtonScript : MonoBehaviour
     [SerializeField] private TMP_Text textDeal;
     [SerializeField] private GameObject MinigameInstructions;
 
+
    
     #region Variables
     private Camera main;                            //ref to the camere, used to move the camera to each minigame scene

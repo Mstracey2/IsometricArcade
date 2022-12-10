@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class InsufficientFundsScript : MonoBehaviour
+public class TemporaryTextScript : MonoBehaviour
 {
     private float timer;
     // Start is called before the first frame update

@@ -6,10 +6,12 @@ public class TableMinigameManager : Minigame
 {
     #region Variables
     [SerializeField] private List<GameObject> poolBalls = new List<GameObject>();    // list of all the balls
-   [SerializeField] private GameObject[] PoolBallSpawnLocations;                    //list of all the possible locations for the balls to spawn at
+    [SerializeField] private GameObject[] PoolBallSpawnLocations;                    //list of all the possible locations for the balls to spawn at
     private MinigameManager miniManager;
     private bool gameStarted;
     public List<int> alreadyChosenLocations = new List<int>();                      //int to store what locations are taken
+    [SerializeField] private GameObject WinningScreen;
+    [SerializeField] private GameObject failedScreen;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class TableMinigameManager : Minigame
                     ball.SetActive(false);
                 }
                 gameStarted = false;
+                failedScreen.SetActive(true);
             }
             else if (gameStarted)                           // checking to see if the player has won yet
             {
@@ -55,6 +58,7 @@ public class TableMinigameManager : Minigame
                     gameStarted = false;                    // game is no longer active
                     MinigameButtonScript.Instance.TimesIncome();        // rewarding the player with extra income to that machine
                     MinigameButtonScript.Instance.ReturnToMain();       //player is returned to main scene
+                    WinningScreen.SetActive(true);
                 }
             }
         }
