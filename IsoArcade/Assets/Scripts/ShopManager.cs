@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class ShopManager : PanelUI
 {
-    public float timer;             
+    private float timer;             
     [SerializeField]
     private InventoryManager playerInventory;
-
-    public ButtonManager itemButton;
+    [SerializeField] private GameObject fundsText;
+    private ButtonManager itemButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +77,10 @@ public class ShopManager : PanelUI
             itemButton.AddSpawnInRoomListener(playerInventory);                                             //On click will now spawn the object in the room
             playerInventory.AddItemToList(chosenItem);                                                      //adds the manager to the inventory item list
             itemList.Remove(chosenItem.GetComponent<ButtonManager>());                                      //removes the manager from the shop item list
+        }
+        else
+        {
+            fundsText.SetActive(true);
         }
     }
   
