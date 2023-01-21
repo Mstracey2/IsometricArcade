@@ -49,7 +49,7 @@ public class ShopManager : PanelUI
     }
     public void RandomizeTimer()
     {
-        timer = Random.Range(20, 300);
+        timer = Random.Range(20, 120);
     }
 
     IEnumerator AddToList(GameObject item)

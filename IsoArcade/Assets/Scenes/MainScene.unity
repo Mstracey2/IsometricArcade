@@ -13130,7 +13130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1744429948
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16242,7 +16242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -459, y: 153}
+  m_AnchoredPosition: {x: -459, y: 163.6}
   m_SizeDelta: {x: 607.5772, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2039812226
@@ -16266,7 +16266,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Shop: Here, you can buy all sorts of new items, if you can afford it that
-    is!'
+    is! Keep an eye on the shop, because new items will arrive, and also go forever.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
